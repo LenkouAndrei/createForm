@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8" />
+  <title>Видео</title>
+ </head>
+ <body>
+ <form action="http://fe.it-academy.by/TestForm.php" name="mainForm"></form>
+  <script>
+  function text(arr, name){
+  var Frm = document.forms[name];
+  for(var i=0; arr.length; i++){
+
+
+    if(arr[i]['type'] == 'textarea'){
+
+
+    var El1 = document.createElement('div');
+      El1.style.cssText="height: 200px; position: relative";
+      var El2 = document.createElement('label');
+      El2.appendChild(document.createTextNode(arr[i]['label']));
+      var El3 = document.createElement(arr[i]['type']);
+      El3.style.cssText="position: absolute; top: 25px; left: 0px";
+      El3.setAttribute('cols',arr[i]['parameters'][0]);
+      El3.setAttribute('rows',arr[i]['parameters'][1]);
+      El3.setAttribute('name',arr[i]['name']);
+      El2.appendChild(El3);
+      El1.appendChild(El2);
+      Frm.appendChild(El1);
+
+
+    } else if(arr[i]['type'] == 'select'){
+
+
+    var El1 = document.createElement('p');
+    El1.appendChild(document.createTextNode(arr[i]['label']));
+    El1.style.cssText="position: relative";
+    var El2=document.createElement('select');
+    El2.style.cssText="position: absolute; left:150px";
+    El2.setAttribute('size','1');
+    El2.setAttribute('name',arr[i]['name']);
+
+    function crOption(){
+        var El3 = document.createElement('option');
+
+        if(typeof value == 'object'){
+          El3.setAttribute('selected',value[1]);
+          El3.setAttribute('value',value[0]);
+          El3.appendChild(document.createTextNode(value[0]));
+        }else{
+          El3.setAttribute('value',value);
+          El3.appendChild(document.createTextNode(value));
+        }
+        El2.appendChild(El3);
+      }
+
+    for (var a=0; a<arr[i]['option'].length; a++){
+      var value = arr[i]['option'][a];
+      crOption()
+    }
+    El1.appendChild(El2);
+    Frm.appendChild(El1);
+
+
+    }else if(arr[i]['type'] == 'radio'){
+
+
+    var El1=document.createElement('p');
+    El1.appendChild(document.createTextNode(arr[i]['label']));
+    El1.style.cssText="position: relative";
+    El1.setAttribute('name',arr[i]['name']);
+    El1.setAttribute('type',arr[i]['type']);
+    var El2=document.createElement('label');
+    El2.style.cssText="position: absolute; left: 150px";
+
+    function radioButton(){
+        var El3 = document.createElement('input');
+        var El4 = document.createElement('label');
+        El4.appendChild(El3);
+        if(typeof value == 'object'){
+          El3.checked=true;
+          El3.setAttribute('type',arr[i]['type']);
+          El4.appendChild(document.createTextNode(value[0]));
+        }else{
+          El3.setAttribute('type',arr[i]['type']);
+          El4.appendChild(document.createTextNode(value));
+        }
+        El2.appendChild(El4);
+      }
+
+      for(var a=0; a<arr[i]['category'].length; a++){
+        var value = arr[i]['category'][a];
+        radioButton();
+      }
+      El1.appendChild(El2);
+      Frm.appendChild(El1);
+
+
+    }else if(arr[i]['type'] == 'checkbox'){
+      var El1 = document.createElement('p');
+      El1.appendChild(document.createTextNode(arr[i]['label']));
+      El1.style.cssText="position: relative";
+      El1.setAttribute('name',arr[i]['name']);
+      var El2 = document.createElement('input');
+      El2.setAttribute('type',arr[i]['type']);
+      if(arr[i]['checked']){El2.checked=true;};
+      El2.style.cssText="position: absolute; left: 150px; top: 3px";
+      El1.appendChild(El2);
+      Frm.appendChild(El1);
+
+
+    }else if(arr[i]['type'] == 'submit'){
+
+
+      var El1 = document.createElement('input');
+      El1.setAttribute('value',arr[i]['label']);
+      El1.setAttribute('type',arr[i]['type']);
+      Frm.appendChild(El1);
+
+
+    } else {
+
+
+    var sizepx = arr[i]['width']+"px";
+    var El1=document.createElement('p');
+    El1.appendChild(document.createTextNode(arr[i]['label']));
+    El1.style.cssText="position: relative";
+    var El2=document.createElement('input');
+    El2.setAttribute('type',arr[i]['type']);
+    El2.setAttribute('name',arr[i]['name']);
+    El2.setAttribute('size',sizepx);
+    El2.style.cssText="position: absolute; left: 150px";
+    El1.appendChild(El2);
+    Frm.appendChild(El1);
+    }
+  }
+    return Frm;
+    }
+
+
+  var arrNew = [
+  {name: 'developers', label: 'Разработчики:', type: 'text', width: 106},
+  {name: 'sitename', label: 'Название сайта:', type: 'text', width: 106},
+  {name: 'URLSite', label: 'URL сайта:', type: 'text', width: 66},
+  {name: 'ыiteDate', label: 'Дата запуска сайта:', type: 'text', width: 40},
+  {name: 'vizitors', label: 'Посетителей в сутки:', type: 'text', width: 40},
+  {name: 'e-mail', label: 'e-mail для связи:', type: 'text', width: 86},
+  {'name': 'catalog', 'label': 'Рубрика каталога:', 'type': 'select', 'option': ['здоровье', 'семейный уют', ['бытовая техника', 'selected']]},
+  {'name': 'location', 'label': 'Размещение:', 'type': 'radio', 'category': ['бесплатное', 'платное', 'VIP']},
+  {name: 'enablecomments', label: 'Разрешить отзывы:', type: 'checkbox', checked: true},
+  {'name': 'discribe', 'label': 'Описание сайта:', 'type': 'textarea', 'parameters': [100, 10]},
+  {name: 'print', label: 'Опубликовать', type: 'submit'}
+  ]
+    text(arrNew, "mainForm");
+  </script>
+ </body>
+</html>
+
